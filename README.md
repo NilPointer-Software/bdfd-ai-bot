@@ -7,11 +7,11 @@ This project aims to help users by providing a very fast first response that wil
 
 ## Running bot locally
 
-Currently, the bot uses three environment variables:  
+Currently, the bot uses three environment variables:
 - `OPEN_AI_TOKEN` - Token for OpenAI API
 - `DISCORD_BOT_TOKEN` - Discord bot token
 - `CHANNEL_PARENT_ID` - Channel category ID containing tickets
-  
+
 In the future, we will switch to a more robust configuration solution.
 
 ## Contributing
