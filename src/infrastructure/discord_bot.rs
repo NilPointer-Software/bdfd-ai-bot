@@ -1,11 +1,14 @@
 use std::sync::Arc;
-use shaku::{Component, Interface};
-use crate::domain::ai::use_cases::generate_first_message_help_use_case::GenerateFirstMessageHelpUseCase;
+
 use async_trait::async_trait;
+use log::{debug, info, trace, warn};
 use serenity::http::{CacheHttp, Typing};
 use serenity::model::channel::Channel;
 use serenity::model::prelude::{Message, Ready};
 use serenity::prelude::*;
+use shaku::{Component, Interface};
+
+use crate::domain::ai::use_cases::generate_first_message_help_use_case::GenerateFirstMessageHelpUseCase;
 use crate::domain::use_cases::get_app_config_use_case::GetAppConfigUseCase;
 use crate::domain::use_cases::get_discord_client_use_case::GetDiscordClientUseCase;
 
@@ -49,15 +52,15 @@ struct DiscordMessageHandler {
 
 impl DiscordMessageHandler {
     async fn parse_message_with_result(&self, ctx: Context, msg: Message) -> Result<(), Box<dyn std::error::Error>> {
-        println!("Message received! {}", msg.content);
+        trace!("Message received! {}", msg.content);
 
         if msg.author.bot {
-            println!("Ignoring message due to bot user");
+            trace!("Ignoring message due to bot user");
             return Ok(());
         }
 
         if msg.content.starts_with("!") {
-            println!("Ignoring message due to being a command");
+            trace!("Ignoring message due to being a command");
             return Ok(());
         }
 
@@ -67,14 +70,14 @@ impl DiscordMessageHandler {
                 guild_channel
             }
             _ => {
-                println!("Ignoring message due to not being in the guild channel");
+                trace!("Ignoring message due to not being in the guild channel");
                 return Ok(());
             }
         };
         let channel_parent_id = channel.parent_id.ok_or("Missing parent channel id")?;
 
         if channel_parent_id.to_string() != self.channel_parent_id {
-            println!("Ignoring message due to not matching channel category (parent) id");
+            trace!("Ignoring message due to not matching channel category (parent) id");
             return Ok(());
         }
 
@@ -87,14 +90,14 @@ impl DiscordMessageHandler {
                 .find(|msg| { !msg.author.bot || msg.author.id == current_user_id }).is_none();
 
         if !is_first_user_message {
-            println!("Ignoring message due to not being first one");
+            debug!("Ignoring message due to not being first one");
             return Ok(());
         }
 
-        println!("Generating response");
+        debug!("Generating response");
         let typing = Typing::start(ctx.http.clone(), msg.channel_id.0)?;
         let response_content = self.generate_first_message_help_use_case.call(msg.content).await?;
-        println!("Generated response content!");
+        info!("Generated response content!");
 
         msg.channel_id.say(&ctx.http, response_content).await?;
         _ = typing.stop();
@@ -108,12 +111,12 @@ impl EventHandler for DiscordMessageHandler {
     async fn message(&self, ctx: Context, msg: Message) {
         let result = self.parse_message_with_result(ctx, msg).await;
         match result {
-            Err(err) => println!("Failed to process message: {}", err),
+            Err(err) => warn!("Failed to process message: {}", err),
             _ => {}
         }
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
-        println!("{} is connected!", ready.user.name);
+        info!("Discord bot ({}) is connected!", ready.user.name);
     }
 }
