@@ -19,7 +19,7 @@ Here are the most common issues with their solutions:
 
 The user bot is offline:
 Instruct user to:
-1. Click "Issue with hosting?" button in the bot dashboard tab, and check if all values are green.
+1. Click "Issues with hosting?" button in the bot dashboard tab, and check if all values are green.
 2. Check if selected intents in bot settings match with the ones that are available in his discord developer portal.
 3. Check if the date, time, and timezone on your phone are correct.
 4. If their bot is still offline after completing these steps, instruct them to provide us with their bot's name and Discord ID. 
