@@ -4,7 +4,7 @@ use async_trait::async_trait;
 use log::{debug, info, trace, warn};
 use serenity::http::{CacheHttp, Typing};
 use serenity::model::channel::Channel;
-use serenity::model::prelude::{Message, Ready};
+use serenity::model::prelude::{Message, Ready, PermissionOverwriteType};
 use serenity::prelude::*;
 use shaku::{Component, Interface};
 
@@ -81,13 +81,18 @@ impl DiscordMessageHandler {
             return Ok(());
         }
 
-        let current_user_id = ctx.cache.current_user_id();
+        let message_author = msg.author.id;
+        if let None = channel.permission_overwrites.iter().find(|x| x.kind == PermissionOverwriteType::Member(message_author)) {
+            trace!("Ignoring message due to the author not being the creator of the ticket");
+            return Ok(());
+        }
+
         let is_first_user_message =
             channel.messages(&ctx.http, |retriever| retriever
                 .before(msg.id))
                 .await?
                 .iter()
-                .find(|msg| { !msg.author.bot || msg.author.id == current_user_id }).is_none();
+                .find(|msg| { !msg.author.bot && msg.author.id == message_author }).is_none();
 
         if !is_first_user_message {
             debug!("Ignoring message due to not being first one");
