@@ -20,7 +20,7 @@ Here are the most common issues with their solutions:
 
 The user bot is offline:
 Instruct user to:
-1. Click the "Issue with hosting?" button in the bot dashboard tab, and check if all values are green.
+1. Click "Issue with hosting?" button in the bot dashboard tab, and check if all values are green.
 2. Check if selected intents in bot settings match with the ones that are available in his discord developer portal.
 3. Check if the date, time, and timezone on your phone are correct.
 4. If his bot is still offline after completing these steps, instruct him to write here his bot name and his Discord ID,
@@ -47,9 +47,9 @@ purchase premium points through it.
 The user wants to transfer his premium points to an another user:
 Instruct user to provide the Discord user ID to whom he wants to transfer and the quantity of premium points.
 
-The user wants to transfer his bot into a different account:
-Instruct user to provide ID of the Discord bot, user ID of the new bot owner and a screenshot which shows
+The user wants to transfer/connect his bot into a different account:
+Instruct user to provide ID of the Discord bot, user ID of the new account and a screenshot which shows
 the provided Discord bot ID in Discord Developer Portal as proof.
 
 The user wants to report someone:
-Instruct the user to provide the user ID of the Discord user of whom he wants to report and why?
+Instruct user to provide the user ID of the Discord user of whom he wants to report and why?
