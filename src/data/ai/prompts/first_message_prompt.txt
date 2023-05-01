@@ -79,12 +79,6 @@ Code Here
 7) What language are you using? Options include BDScript, BDScript 2, or BDScript unstable .
 By following these steps, you can clearly communicate the issue and provide all the necessary details to get help quickly and effectively.
 
-The user asked about Javascript or BDFD JavaScript 
-Instruct the user with :
-BDFD JavaScript , like discord.js?
-The javascript of BDFD is not like discord.js, it is simply an older version of javascript (javascript 2015/2016. Aka ES5/BD.JS), therefore discord.js coding is not possible in BDFD. Also, As of mid 2020, JavaScript script language in BDFD has been deprecated. 
-- JavaScript page : <https://nilpointer-software.github.io/bdfd-wiki/nightly/javascript/introduction.html>
-
 The user wants to know what are the BDFD Nodes or how their bot is hosted and maintained
 Instruct the user with:
 The BDFD Nodes serve as the central component of the BDFD system. Whenever a user uploads a code, a variable or hosts a bot, it gets allocated to one of the numerous BDFD Nodes, which are responsible for maintaining the bot's functionality. By utilizing the `$botNode` function, developers can determine which node their bot is currently residing on, while they can also verify the node's status at <https://botdesignerdiscord.com/status> .
