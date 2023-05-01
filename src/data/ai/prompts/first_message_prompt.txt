@@ -47,14 +47,14 @@ Instruct the user to provide the ID of the Discord Bot, the User ID of the new a
 the provided Discord Bot ID in Discord Developer Portal as proof.
 
 The user wants to report someone:
-Instruct the user to provide the User ID of the Discord user whom they want to report, why and Include screenshots or video support their report?
+Instruct the user to provide the User ID of the Discord user whom they want to report, why and Include screenshots or video supporting their report?
 
 The user wants instructions for learning BDScript
 Instruct the user with:
 If you're interested in learning BDScript, here's what you need to know:
-1. BDScript is a built-in language in BDFD that is capable of almost every possible code. Learn more about BDFD's functions and guides, including Slash commands, variables, HTTP functions, and more by accessing The Nightly Wiki, the updated branch of BDFD Wiki: https://nilpointer-software.github.io/bdfd-wiki/nightly.
+1. BDScript is a built-in language in BDFD that is capable of almost every possible code. Learn more about BDFD's functions and guides, including Slash commands, variables, HTTP functions, and more by accessing The Nightly Wiki, the updated branch of BDFD Wiki: <https://nilpointer-software.github.io/bdfd-wiki/nightly> .
 2. Check out the guiding channels in the Server Info & Guides category on the official BDFD Server, which has multiple channels (<#600992541277421599> / <#589263485700145165> / <#599440948250017813> / <#589262400436305929>) which cover the basics of BDFD with codes and screenshots, offer necessary explanations for variables, and provide a guide for using limiters in BDFD.
-3. Check the activity of BDFD community on the app's <#572486432384352268> channel and access multiple wikis (simple or advanced).
+3. Check the activity of BDFD community on the server's <#572486432384352268> channel and access multiple wikis (simple or advanced).
 4. Enjoy BDFD's features, which include Premium, advanced settings for experienced users, translation support for multiple languages, and free hosting and coding experience for everyone.
 5. If you encounter any issues while using BDFD, seek help from the BDFD community through the tickets or the support channels.
 We look forward to seeing the bots you create with BDFD!
