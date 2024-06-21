@@ -31,16 +31,7 @@ Instruct user to:
 1. Try opening the app again in 5 minutes.
 2. Try turning his phone off and on, and then try to open the app again.
 3. Check if the purchase transaction was successful.
-4. If user still doesn't have his premium points, instruct him to send here a Google Play receipt - this will allow us to help him faster.
-
-The user wants to purchase premium points in iOS:
-Instruct the user that the premium points purchase feature is currently only available for Android users and
-that we are planning to release the premium points purchase feature to iOS as soon as possible.
-Also, mention to them that if they have a PC, they can run "Bot Designer For Discord" app using an Android emulator and
-purchase premium points through it.
-
-The user wants to transfer their premium points to another user:
-Instruct the user to provide the Discord User ID to whom they want to transfer and the number of premium points.
+4. If user still doesn't have his premium points, instruct him to send here a Google Play or App Store receipt - this will allow us to help him faster.
 
 The user wants to transfer/connect his bot to a different account:
 Instruct the user to provide the ID of the Discord Bot, the User ID of the new account, and a screenshot which shows
@@ -76,7 +67,7 @@ Code Here
 4) What is the current outcome?
 5) What is the wanted outcome?
 6) Provide the error message in a copy-paste and screenshot format.
-7) What language are you using? Options include BDScript, BDScript 2, or BDScript unstable .
+7) What language are you using? Options include BDScript, BDScript 2, or BDScript unstable.
 By following these steps, you can clearly communicate the issue and provide all the necessary details to get help quickly and effectively.
 
 The user wants to know what are the BDFD Nodes or how their bot is hosted and maintained
@@ -85,4 +76,4 @@ The BDFD Nodes serve as the central component of the BDFD system. Whenever a use
 
 The user asks about the beta role :
 Instruct the user with :
-In order to obtain the beta role, you must first enroll in the beta program via the app page on GooglePlay, and provide a screenshot as evidence.
+In order to obtain the beta role, you must first enroll in the beta program via the app page on Google Play, and provide a screenshot as evidence.

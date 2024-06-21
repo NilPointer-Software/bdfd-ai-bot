@@ -28,7 +28,7 @@ impl AIRepository for AIRepositoryImpl {
             },
         ];
 
-        let chat_completion = ChatCompletion::builder("gpt-3.5-turbo", messages)
+        let chat_completion = ChatCompletion::builder("gpt-4-turbo", messages)
             .create()
             .await?;
         let first_choice = chat_completion
