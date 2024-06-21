@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use async_trait::async_trait;
 use log::{debug, info, trace, warn};
 use serenity::http::{CacheHttp, Typing};
@@ -7,6 +5,7 @@ use serenity::model::channel::Channel;
 use serenity::model::prelude::{Message, PermissionOverwrite, PermissionOverwriteType, Ready};
 use serenity::prelude::*;
 use shaku::{Component, Interface};
+use std::sync::Arc;
 
 use crate::domain::ai::use_cases::generate_first_message_help_use_case::GenerateFirstMessageHelpUseCase;
 use crate::domain::use_cases::get_app_config_use_case::GetAppConfigUseCase;
@@ -124,7 +123,11 @@ impl DiscordMessageHandler {
             .await?;
         info!("Generated response content!");
 
-        msg.channel_id.say(&ctx.http, response_content).await?;
+        let ai_generated_message_disclaimer =
+            include_str!("data/ai_generated_message_disclaimer.txt");
+        let response_message = format!("{response_content}\n\n*{ai_generated_message_disclaimer}*");
+
+        msg.channel_id.say(&ctx.http, response_message).await?;
         _ = typing.stop();
 
         Ok(())
