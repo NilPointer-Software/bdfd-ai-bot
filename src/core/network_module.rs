@@ -1,8 +1,8 @@
-use std::sync::Arc;
-use serenity::prelude::GatewayIntents;
-use shaku::{Interface, Component};
-use crate::core::app_config::{AppConfigService};
+use crate::core::app_config::AppConfigService;
 use serenity::client;
+use serenity::prelude::GatewayIntents;
+use shaku::{Component, Interface};
+use std::sync::Arc;
 
 pub trait NetworkModule: Interface {
     fn get_discord_client(&self) -> client::ClientBuilder;
@@ -23,4 +23,3 @@ impl NetworkModule for NetworkModuleImpl {
         serenity::Client::builder(bot_token, intents)
     }
 }
-

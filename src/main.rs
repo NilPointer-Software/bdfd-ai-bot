@@ -1,5 +1,5 @@
 use flexi_logger::Logger;
-use shaku::{HasComponent, module};
+use shaku::{module, HasComponent};
 
 use crate::core::app_config::AppConfigServiceImpl;
 use crate::core::network_module::NetworkModuleImpl;
@@ -29,10 +29,12 @@ module! {
     }
 }
 
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    Logger::try_with_env_or_str("info, tracing::span=warn").unwrap().start().unwrap();
+    Logger::try_with_env_or_str("info, tracing::span=warn")
+        .unwrap()
+        .start()
+        .unwrap();
 
     let module = MainModule::builder().build();
     let discord_bot: &dyn DiscordBot = module.resolve_ref();

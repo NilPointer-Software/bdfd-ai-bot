@@ -20,7 +20,6 @@ impl AppConfigService for AppConfigServiceImpl {
 }
 
 pub struct AppConfig {
-    pub open_ai_token: String,
     pub discord_bot_token: String,
     pub channel_parent_id: String,
 }
@@ -38,7 +37,6 @@ impl AppConfig {
         openai::set_key(open_ai_token.to_string());
 
         AppConfig {
-            open_ai_token,
             discord_bot_token: discord_bot_token.unwrap().into_string().unwrap(),
             channel_parent_id: channel_parent_id.unwrap().into_string().unwrap(),
         }

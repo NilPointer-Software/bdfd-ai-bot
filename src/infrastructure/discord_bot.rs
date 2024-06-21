@@ -4,7 +4,7 @@ use async_trait::async_trait;
 use log::{debug, info, trace, warn};
 use serenity::http::{CacheHttp, Typing};
 use serenity::model::channel::Channel;
-use serenity::model::prelude::{Message, Ready, PermissionOverwriteType, PermissionOverwrite};
+use serenity::model::prelude::{Message, PermissionOverwrite, PermissionOverwriteType, Ready};
 use serenity::prelude::*;
 use shaku::{Component, Interface};
 
@@ -16,7 +16,6 @@ use crate::domain::use_cases::get_discord_client_use_case::GetDiscordClientUseCa
 pub trait DiscordBot: Interface {
     async fn start_bot(&self) -> Result<(), Box<dyn std::error::Error>>;
 }
-
 
 #[derive(Component)]
 #[shaku(interface = DiscordBot)]
@@ -51,7 +50,11 @@ struct DiscordMessageHandler {
 }
 
 impl DiscordMessageHandler {
-    async fn parse_message_with_result(&self, ctx: Context, msg: Message) -> Result<(), Box<dyn std::error::Error>> {
+    async fn parse_message_with_result(
+        &self,
+        ctx: Context,
+        msg: Message,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         trace!("Message received! {}", msg.content);
 
         if msg.author.bot {
@@ -59,16 +62,14 @@ impl DiscordMessageHandler {
             return Ok(());
         }
 
-        if msg.content.starts_with("!") {
+        if msg.content.starts_with('!') {
             trace!("Ignoring message due to being a command");
             return Ok(());
         }
 
         let channel = msg.channel(&ctx.http()).await?;
         let channel = match channel {
-            Channel::Guild(guild_channel) => {
-                guild_channel
-            }
+            Channel::Guild(guild_channel) => guild_channel,
             _ => {
                 trace!("Ignoring message due to not being in the guild channel");
                 return Ok(());
@@ -82,12 +83,14 @@ impl DiscordMessageHandler {
         }
 
         let message_author = msg.author.id;
-        let member_overwrites: Vec<&PermissionOverwrite> = channel.permission_overwrites
+        let member_overwrites: Vec<&PermissionOverwrite> = channel
+            .permission_overwrites
             .iter()
             .filter(|x| matches!(x.kind, PermissionOverwriteType::Member(_)))
             .collect();
 
-        let message_check: Box<dyn Fn(&&Message) -> bool + Send> = if member_overwrites.len() > 0 {
+        let message_check: Box<dyn Fn(&&Message) -> bool + Send> = if !member_overwrites.is_empty()
+        {
             let res = member_overwrites
                 .iter()
                 .find(|x| x.kind == PermissionOverwriteType::Member(message_author));
@@ -102,12 +105,11 @@ impl DiscordMessageHandler {
 
         let current_user_id = ctx.cache.current_user_id();
 
-        let is_first_user_message =
-            channel.messages(&ctx.http, |retriever| retriever
-                .before(msg.id))
-                .await?
-                .iter()
-                .find(|msg| message_check(msg) || msg.author.id == current_user_id).is_none();
+        let is_first_user_message = !channel
+            .messages(&ctx.http, |retriever| retriever.before(msg.id))
+            .await?
+            .iter()
+            .any(|msg| message_check(&msg) || msg.author.id == current_user_id);
 
         if !is_first_user_message {
             debug!("Ignoring message due to not being first one");
@@ -116,7 +118,10 @@ impl DiscordMessageHandler {
 
         debug!("Generating response");
         let typing = Typing::start(ctx.http.clone(), msg.channel_id.0)?;
-        let response_content = self.generate_first_message_help_use_case.call(msg.content).await?;
+        let response_content = self
+            .generate_first_message_help_use_case
+            .call(msg.content)
+            .await?;
         info!("Generated response content!");
 
         msg.channel_id.say(&ctx.http, response_content).await?;
@@ -130,9 +135,8 @@ impl DiscordMessageHandler {
 impl EventHandler for DiscordMessageHandler {
     async fn message(&self, ctx: Context, msg: Message) {
         let result = self.parse_message_with_result(ctx, msg).await;
-        match result {
-            Err(err) => warn!("Failed to process message: {}", err),
-            _ => {}
+        if let Err(err) = result {
+            warn!("Failed to process message: {}", err)
         }
     }
 

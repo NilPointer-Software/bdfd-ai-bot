@@ -1,6 +1,6 @@
-use std::sync::Arc;
-use shaku::{Component, Interface};
 use crate::core::app_config::{AppConfig, AppConfigService};
+use shaku::{Component, Interface};
+use std::sync::Arc;
 
 pub trait GetAppConfigUseCase: Interface {
     fn call(&self) -> AppConfig;
