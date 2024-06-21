@@ -1,7 +1,7 @@
-use std::sync::Arc;
-use shaku::{Component, Interface};
-use crate::core::network_module::{NetworkModule};
+use crate::core::network_module::NetworkModule;
 use async_trait::async_trait;
+use shaku::{Component, Interface};
+use std::sync::Arc;
 
 #[async_trait]
 pub trait GetDiscordClientUseCase: Interface {
